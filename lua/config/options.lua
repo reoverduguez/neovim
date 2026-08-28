@@ -20,7 +20,6 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "100"
 vim.opt.showmatch = true
 vim.opt.cmdheight = 1
 vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -68,6 +67,8 @@ vim.opt.wildmode = "longest:full,full"
 vim.opt.diffopt:append("linematch:60")
 vim.opt.redrawtime = 10000
 vim.opt.maxmempattern = 20000
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
 
 -- Disable automatic commenting on new lines
 vim.api.nvim_create_autocmd("BufEnter", {

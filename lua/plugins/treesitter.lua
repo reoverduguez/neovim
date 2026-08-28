@@ -21,7 +21,7 @@ return {
         "yaml"
       }
       if treesitter.install then
-        ts.install(parsers)
+        treesitter.install(parsers)
         local filetypes = {
          "lua",
           "vim",
@@ -35,7 +35,7 @@ return {
           "yaml",
           "markdown",
         }
-        vim.api.nvim_create_autocmd("FileTypes", {
+        vim.api.nvim_create_autocmd("FileType", {
           pattern = filetypes,
           callback = function()
             vim.treesitter.start()
