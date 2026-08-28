@@ -14,7 +14,7 @@ return {
     config = function()
       require("neo-tree").setup({
         window = {
-          width = 30, -- default sidebar width
+          width = 40, -- default sidebar width
         },
         filesystem = {
           filtered_items = {
