@@ -22,6 +22,7 @@ return {
         { "<leader>f", group = "Find / Telescope" },
         { "<leader>r", group = "Refactoring" },
         { "<leader>s", group = "Window Split" },
+        { "<leader>h", group = "Git Hunks" },
       })
     end,
     keys = {

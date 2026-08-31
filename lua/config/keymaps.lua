@@ -26,7 +26,3 @@ keymap("n", "<C-u>", "<C-u>zz", { desc = "Keep cursor centered when moving up" }
 
 keymap("v", ">", ">gv", { desc = "Indent selection and keep focus" })
 keymap("v", "<", "<gv", { desc = "De-indent selection and keep focus" })
-
-keymap("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
-keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
-keymap("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
