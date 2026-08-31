@@ -21,7 +21,7 @@ return {
       })
       local lspconfig = require("lspconfig")
       require("mason-lspconfig").setup({
-        -- Automatically download these servers on startup!
+        -- Automatically download these servers on startup
         ensure_installed = {
           "lua_ls",
           "ts_ls",
@@ -50,7 +50,6 @@ return {
           end,
         },
       })
-
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
@@ -73,6 +72,11 @@ return {
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename variable or function across codebase", buffer = ev.buf })
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show line diagnostics", buffer = ev.buf })
         end,
+      })
+      vim.diagnostic.config({
+        underline = {
+          severity = { min = vim.diagnostic.severity.WARN },
+        },
       })
     end,
   },
