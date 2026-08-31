@@ -63,6 +63,7 @@ return {
                   width = 0.9,
                   height = 0.8,
                   preview_height = 0.6,
+                  preview_cutoff = 0,
                 },
             })
           end, { desc = "Show references", buffer = ev.buf })
@@ -71,6 +72,42 @@ return {
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "List available code action/fixes", buffer = ev.buf })
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename variable or function across codebase", buffer = ev.buf })
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show line diagnostics", buffer = ev.buf })
+          -- Stacked vertical layout for Document Symbols (Code Hierarchy Outline)
+          vim.keymap.set("n", "gS", function()
+            require("telescope.builtin").lsp_document_symbols({
+              layout_strategy = "vertical",
+              layout_config = {
+                width = 0.9,
+                height = 0.8,
+                preview_height = 0.6,
+                preview_cutoff = 0,
+              },
+            })
+          end, { desc = "Show document code hierarchy/symbols", buffer = ev.buf })
+          -- Stacked layout for Incoming Calls (Who calls this function?)
+          vim.keymap.set("n", "<leader>ci", function()
+            require("telescope.builtin").lsp_incoming_calls({
+              layout_strategy = "vertical",
+              layout_config = {
+                width = 0.9,
+                height = 0.8,
+                preview_height = 0.6,
+                preview_cutoff = 0,
+              },
+            })
+          end, { desc = "Show incoming call hierarchy", buffer = ev.buf })
+          -- Stacked layout for Outgoing Calls (What functions does this call?)
+          vim.keymap.set("n", "<leader>co", function()
+            require("telescope.builtin").lsp_outgoing_calls({
+              layout_strategy = "vertical",
+              layout_config = {
+                width = 0.9,
+                height = 0.8,
+                preview_height = 0.6,
+                preview_cutoff = 0,
+              },
+            })
+          end, { desc = "Show outgoing call hierarchy", buffer = ev.buf })
         end,
       })
       vim.diagnostic.config({

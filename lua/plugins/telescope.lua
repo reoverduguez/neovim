@@ -20,6 +20,7 @@ return {
               width = 0.9,
               height = 0.8,
               preview_height = 0.6,
+              preview_cutoff = 0
             },
           })
         end,
