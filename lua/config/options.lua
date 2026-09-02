@@ -1,4 +1,5 @@
 -- OPTIONS
+vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = false
@@ -17,7 +18,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes:1"
 vim.opt.showmatch = true
 vim.opt.cmdheight = 1
 vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -74,3 +75,80 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.opt.formatoptions:remove({ "c", "r", "o" })
   end,
 })
+
+-- Diagnostic & Gruvbox Highlighting Configuration
+
+-- General Diagnostic Behavior (Icons & Popups)
+local signs = { Error = "■", Warn = "▲", Info = "◆", Hint = "●" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+vim.diagnostic.config({
+  virtual_text = {
+    severity = { min = vim.diagnostic.severity.WARN },
+    prefix = function(diagnostic)
+      local icons = {
+        [vim.diagnostic.severity.ERROR] = "●",
+        [vim.diagnostic.severity.WARN]  = "▲",
+        [vim.diagnostic.severity.INFO]  = "◆",
+        [vim.diagnostic.severity.HINT]  = "●",
+      }
+      return icons[diagnostic.severity] or "●"
+    end,
+    spacing = 4,
+  },
+  signs = {
+    text = {
+      -- gutter icons
+      [vim.diagnostic.severity.ERROR] = "●",
+      [vim.diagnostic.severity.WARN]  = "▲",
+      [vim.diagnostic.severity.INFO]  = "◆",
+      [vim.diagnostic.severity.HINT]  = "●",
+    }
+  },
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "always",
+    prefix = " ",
+  },
+})
+
+-- Highlight Overrides (Protected inside a ColorScheme Autocommand)
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    local colors = {
+      bright_red    = "#fb4934",
+      bright_orange = "#fe8019",
+      bright_blue   = "#83a598",
+      bright_aqua   = "#8ec07c",
+      bg0_h         = "#1d2021",
+    }
+
+    -- Apply bright Gruvbox undercurls
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = colors.bright_red, bold = true })
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = colors.bright_orange, bold = true })
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = colors.bright_blue })
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = colors.bright_aqua })
+
+    -- Apply matching colors to virtual text
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = colors.bright_red, bold = true })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = colors.bright_orange })
+
+    -- Apply matching colors to sidebar signs
+    vim.api.nvim_set_hl(0, "DiagnosticSignError", { fg = colors.bright_red, bold = true })
+    vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { fg = colors.bright_orange, bold = true })
+    vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { fg = colors.bright_blue })
+    vim.api.nvim_set_hl(0, "DiagnosticSignHint", { fg = colors.bright_aqua })
+
+    -- High-contrast popup window styling
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = colors.bg0_h })
+    vim.api.nvim_set_hl(0, "FloatBorder", { fg = colors.bright_orange, bg = colors.bg0_h })
+  end,
+})
+

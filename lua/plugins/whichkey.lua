@@ -18,11 +18,11 @@ return {
       })
       whichkey.add({
         { "<leader>b", group = "Buffers" },
-        { "<leader>c", group = "Code / LSP" },
+        { "<leader>c", group = "Code / LSP", mode = { "n", "v" } },
         { "<leader>f", group = "Find / Telescope" },
         { "<leader>r", group = "Refactoring" },
         { "<leader>s", group = "Window Split" },
-        { "<leader>h", group = "Git Hunks" },
+        { "<leader>g", group = "Git", mode = { "n", "v" } },
       })
     end,
     keys = {

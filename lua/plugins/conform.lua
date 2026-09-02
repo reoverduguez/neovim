@@ -5,12 +5,16 @@ return {
     cmd = { "ConformInfo" }, -- Loads when you run the info command
     keys = {
       {
-        "<leader>mp", -- "Format Project"
+        "<leader>cf",
         function()
-          require("conform").format({ async = true, lsp_fallback = false })
+          require("conform").format({
+            async = true,
+            lsp_fallback = false,
+            timeout_ms = 1000,
+          })
         end,
-        mode = "",
-        desc = "Format active file or visual selection",
+        mode = { "n", "v" },
+        desc = "Format file (Normal) or Selection (Visual)",
       },
     },
     opts = {
@@ -53,10 +57,6 @@ return {
             }, { path = ctx.filename, upward = true })[1] ~= nil
           end,
         },
-      },
-      format_on_save = {
-        timeout_ms = 1000,   -- Wait up to 1 second for ESLint to finish auto-fixing
-        lsp_fallback = false, -- Turn off LSP fallback so it strictly uses local configs
       },
     },
   },
