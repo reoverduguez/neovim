@@ -1,10 +1,10 @@
 return {
   {
-    "ellisonleao/gruvbox.nvim",
+    'ellisonleao/gruvbox.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      require("gruvbox").setup({
+      require('gruvbox').setup({
         terminal_colors = true,
         undercurl = true,
         underline = true,
@@ -21,34 +21,34 @@ return {
         invert_signs = false,
         invert_tabline = false,
         inverse = true,
-        contrast = "hard",
+        contrast = 'hard',
         transparent_mode = false,
       })
-      vim.o.background = "dark"
-      vim.cmd([[colorscheme gruvbox]])
+      vim.o.background = 'dark'
+      vim.cmd.colorscheme(vim.g.mycolorscheme)
     end,
   },
   {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "VeryLazy",
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    event = 'VeryLazy',
     config = function()
-      require("lualine").setup({
+      require('lualine').setup({
         options = {
-          theme = "gruvbox",
-          component_separators = { left = "│", right = "│" },
-          section_separators = { left = "", right = "" },
+          theme = 'gruvbox',
+          component_separators = { left = '│', right = '│' },
+          section_separators = { left = '', right = '' },
           globalstatus = true, -- keep a single, clean statusline across all splits
         },
         sections = {
-          lualine_a = { { "mode", separator = { left = "", right = "" } } },
-          lualine_b = { "branch", "diff" },
-          lualine_c = { { "filename", file_status = true, path = 1 } },
-          lualine_x = { "diagnostics", "filesize", "fileformat", "filetype" },
-          lualine_y = { "progress" },
-          lualine_z = { { "location", separator = { left = "", right = "" } } },
+          lualine_a = { { 'mode', separator = { left = '', right = '' } } },
+          lualine_b = { 'branch', 'diff' },
+          lualine_c = { { 'filename', file_status = true, path = 1 } },
+          lualine_x = { 'diagnostics', 'filesize', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { { 'location', separator = { left = '', right = '' } } },
         },
       })
     end,
-  }
+  },
 }
