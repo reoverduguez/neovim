@@ -23,6 +23,7 @@ return {
       require('mason-lspconfig').setup({
         -- Automatically download these servers on startup
         ensure_installed = {
+          'html',
           'lua_ls',
           'ts_ls',
           'jsonls',
