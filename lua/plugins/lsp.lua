@@ -23,6 +23,7 @@ return {
       require('mason-lspconfig').setup({
         -- Automatically download these servers on startup
         ensure_installed = {
+          'emmet_language_server',
           'html',
           'lua_ls',
           'ts_ls',
@@ -69,12 +70,9 @@ return {
           end, { desc = 'Show references', buffer = ev.buf })
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Show implementations', buffer = ev.buf })
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show hover documentation details', buffer = ev.buf })
-          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-            { desc = 'List available code action/fixes', buffer = ev.buf })
-          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-            { desc = 'Rename variable or function across codebase', buffer = ev.buf })
-          vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float,
-            { desc = 'Show line diagnostics', buffer = ev.buf })
+          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'List available code action/fixes', buffer = ev.buf })
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable or function across codebase', buffer = ev.buf })
+          vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show line diagnostics', buffer = ev.buf })
           vim.keymap.set('n', '<leader>D', function()
             require('telescope.builtin').diagnostics({
               bufnr = 0,
@@ -112,17 +110,15 @@ return {
             })
           end, { desc = 'Show incoming call hierarchy', buffer = ev.buf })
           -- Stacked layout for Outgoing Calls (What functions does this call?)
-          vim.keymap.set('n', '<leader>co', function()
-            require('telescope.builtin').lsp_outgoing_calls({
-              layout_strategy = 'vertical',
-              layout_config = {
-                width = 0.9,
-                height = 0.8,
-                preview_height = 0.6,
-                preview_cutoff = 0,
-              },
+          vim.keymap.set('n', '<leader>ca', function()
+            vim.lsp.buf.code_action({
+              apply = true,
+              filter = function(action)
+                -- Match the exact title ts_ls uses for this action
+                return action.title == 'Add all missing imports'
+              end,
             })
-          end, { desc = 'Show outgoing call hierarchy', buffer = ev.buf })
+          end, { desc = 'Add missing imports', buffer = ev.buf })
         end,
       })
       vim.diagnostic.config({

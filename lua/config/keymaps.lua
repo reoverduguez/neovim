@@ -45,3 +45,53 @@ keymap('n', '<leader>gR', function()
     vim.notify('Executed: git restore ' .. file)
   end
 end, { desc = 'Git restore current file (discard unstaged changes)' })
+
+keymap('n', '<leader>ce', function()
+  local file = vim.fn.expand('%:p')
+  local dir = vim.fs.dirname(file)
+  local eslint = vim.fs.find('node_modules/.bin/eslint', {
+    path = dir,
+    upward = true,
+  })[1] or 'eslint'
+
+  local has_config = vim.fs.find({
+    'eslint.config.js',
+    'eslint.config.mjs',
+    'eslint.config.cjs',
+    '.eslintrc',
+    '.eslintrc.js',
+    '.eslintrc.json',
+    '.eslintrc.yaml',
+    '.eslintrc.yml',
+  }, {
+    path = dir,
+    upward = true,
+  })[1]
+
+  if not has_config then
+    vim.notify('No ESLint config found for this file', vim.log.levels.WARN)
+    return
+  end
+
+  if eslint == 'eslint' and vim.fn.executable('eslint') ~= 1 then
+    vim.notify('ESLint executable not found', vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify('Running ESLint --fix...', vim.log.levels.INFO)
+
+  vim.fn.jobstart({ eslint, '--fix', file }, {
+    stdout_buffered = true,
+    stderr_buffered = true,
+    on_exit = function(_, code)
+      vim.schedule(function()
+        vim.cmd('checktime')
+        if code == 0 then
+          vim.notify('ESLint fix complete', vim.log.levels.INFO)
+        else
+          vim.notify('ESLint fix failed', vim.log.levels.ERROR)
+        end
+      end)
+    end,
+  })
+end, { desc = 'ESLint fix current file' })
