@@ -10,6 +10,7 @@ return {
       -- Snippet Engine: Required for expanding code snippets (like loops)
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
+      'abecodes/tabout.nvim',
     },
     config = function()
       local cmp = require('cmp')

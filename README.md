@@ -32,9 +32,10 @@ The configuration is broken down into modular files for easy maintenance:
 This setup comes pre-configured with several essential plugins to provide an IDE-like experience:
 
 * **LSP & Autocompletion**: `nvim-lspconfig`, `mason.nvim`, `completion.lua`
-* **UI & Aesthetics**: `bufferline.nvim`, `lualine` 
+* **UI & Aesthetics**: `bufferline.nvim`, `lualine`
 * **File Management**: `neo-tree.nvim`
-* **Navigation & Searching**: `telescope.nvim`
+* **Navigation & Searching**: `telescope.nvim, flash.nvim`
 * **Syntax Highlighting**: `nvim-treesitter`
+* **Editing Enhancements**: `tabout.nvim`
 * **Formatting & Linting**: `conform.nvim`
 * **Git Integration**: `gitsigns.nvim`

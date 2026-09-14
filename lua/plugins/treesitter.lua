@@ -6,6 +6,7 @@ return {
     config = function()
       local treesitter = require('nvim-treesitter')
       treesitter.setup()
+
       local parsers = {
         'bash',
         'css',
@@ -15,48 +16,58 @@ return {
         'markdown',
         'python',
         'typescript',
+        'javascript',
         'tsx',
         'vim',
         'vimdoc',
         'yaml',
       }
+
+      if vim.treesitter.language and vim.treesitter.language.register then
+        vim.treesitter.language.register('html', 'htmlangular')
+      end
+
       if treesitter.install then
         treesitter.install(parsers)
-        local filetypes = {
-          'lua',
-          'vim',
-          'bash',
-          'python',
-          'typescript',
-          'typescriptreact',
-          'html',
-          'css',
-          'json',
-          'yaml',
-          'markdown',
-        }
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = filetypes,
-          callback = function(args)
-            local bufnr = args.buf
-            if not vim.api.nvim_buf_is_valid(bufnr) then
-              return
-            end
-            pcall(vim.treesitter.start, bufnr)
-            pcall(function()
-              vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-              vim.wo.foldmethod = 'expr'
-              vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-            end)
-          end,
-        })
-      else
-        require('nvim-treesitter.configs').setup({
-          ensure_installed = parsers,
-          highlight = { enable = true },
-          indent = { enable = true },
-        })
       end
+
+      local filetypes = {
+        'lua',
+        'vim',
+        'bash',
+        'javascript',
+        'python',
+        'typescript',
+        'typescriptreact',
+        'htmlangular',
+        'html',
+        'css',
+        'json',
+        'yaml',
+        'markdown',
+      }
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = filetypes,
+        callback = function(args)
+          local bufnr = args.buf
+          if not vim.api.nvim_buf_is_valid(bufnr) then
+            return
+          end
+
+          pcall(vim.treesitter.start, bufnr)
+
+          if vim.bo[bufnr].filetype == 'htmlangular' then
+            vim.bo[bufnr].syntax = 'html'
+          end
+
+          pcall(function()
+            vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            vim.wo.foldmethod = 'expr'
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          end)
+        end,
+      })
     end,
   },
   {
@@ -76,6 +87,7 @@ return {
           set_jumps = true,
         },
       })
+
       local select = require('nvim-treesitter-textobjects.select')
 
       vim.keymap.set({ 'x', 'o' }, 'af', function()
