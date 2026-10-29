@@ -10,9 +10,6 @@ keymap('n', '<C-j>', '<C-w>j', { desc = 'Move to down window' })
 keymap('n', '<C-k>', '<C-w>k', { desc = 'Move to up window' })
 keymap('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
-keymap('n', '<leader>sv', ':vsplit<CR>', { desc = 'Split window vertically' })
-keymap('n', '<leader>sh', ':split<CR>', { desc = 'Split window horizontally' })
-
 keymap('n', '<C-Up>', ':resize +2<CR>', { desc = 'Increase window height' })
 keymap('n', '<C-Down>', ':resize -2<CR>', { desc = 'Decrease window height' })
 keymap('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Decrease window width' })
@@ -94,4 +91,4 @@ keymap('n', '<leader>ce', function()
       end)
     end,
   })
-end, { desc = 'ESLint fix current file' })
+end, { desc = 'ESLint fix current file with config' })

@@ -7,22 +7,17 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
     keys = {
-      { '<leader>bn', '<cmd>BufferLineCycleNext<cr>', desc = 'Next buffer (tab order)' },
-      { '<leader>bp', '<cmd>BufferLineCyclePrev<cr>', desc = 'Previous buffer (tab order)' },
       { '<leader>bd', '<cmd>bdelete<cr>', desc = 'Delete active buffer' },
       { '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Close all other buffers' },
       { '<leader>br', '<Cmd>BufferLineCloseRight<CR>', desc = 'Close buffers to the right' },
       { '<leader>bl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Close buffers to the left' },
+      { '<leader>bj', '<Cmd>BufferLinePick<CR>', desc = 'Jump to any buffer' },
+      { '<leader>bv', '<cmd>vsplit | BufferLinePick<cr>', desc = 'Vertical split and pick buffer' },
+      { '<leader>bh', '<cmd>split | BufferLinePick<cr>', desc = 'Horizontal split and pick buffer' },
 
-      { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Go to next tab/buffer' },
-      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Go to previous tab/buffer' },
+      { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Go to next buffer' },
+      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Go to previous buffer' },
 
-      { '<leader>b1', '<Cmd>BufferLineGoToBuffer 1<CR>', desc = 'Go to buffer 1' },
-      { '<leader>b2', '<Cmd>BufferLineGoToBuffer 2<CR>', desc = 'Go to buffer 2' },
-      { '<leader>b3', '<Cmd>BufferLineGoToBuffer 3<CR>', desc = 'Go to buffer 3' },
-      { '<leader>b4', '<Cmd>BufferLineGoToBuffer 4<CR>', desc = 'Go to buffer 4' },
-      { '<leader>b5', '<Cmd>BufferLineGoToBuffer 5<CR>', desc = 'Go to buffer 5' },
-      { '<leader>b6', '<Cmd>BufferLineGoToBuffer 5<CR>', desc = 'Go to buffer 6' },
     },
     config = function()
       require('bufferline').setup({

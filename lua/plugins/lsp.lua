@@ -135,9 +135,26 @@ return {
               vim.lsp.buf.definition()
             end
           end, { desc = 'Show implementation', buffer = ev.buf })
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show hover documentation details', buffer = ev.buf })
-          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable or function across codebase', buffer = ev.buf })
-          vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show line diagnostics', buffer = ev.buf })
+
+          vim.keymap.set(
+            'n',
+            'K',
+            vim.lsp.buf.hover,
+            { desc = 'Show hover documentation details', buffer = ev.buf }
+          )
+          vim.keymap.set(
+            'n',
+            '<leader>cr',
+            vim.lsp.buf.rename,
+            { desc = 'Rename variable or function across codebase', buffer = ev.buf }
+          )
+          vim.keymap.set(
+            'n',
+            '<leader>d',
+            vim.diagnostic.open_float,
+            { desc = 'Show line diagnostics', buffer = ev.buf }
+          )
+
           vim.keymap.set('n', '<leader>D', function()
             require('telescope.builtin').diagnostics({
               bufnr = 0,
@@ -150,6 +167,7 @@ return {
               },
             })
           end, { desc = 'Show document diagnostics', buffer = ev.buf })
+
           vim.keymap.set('n', 'gS', function()
             require('telescope.builtin').lsp_document_symbols({
               layout_strategy = 'vertical',
@@ -161,6 +179,7 @@ return {
               },
             })
           end, { desc = 'Show document code hierarchy/symbols', buffer = ev.buf })
+
           vim.keymap.set('n', '<leader>ci', function()
             require('telescope.builtin').lsp_incoming_calls({
               layout_strategy = 'vertical',
@@ -172,11 +191,13 @@ return {
               },
             })
           end, { desc = 'Show incoming call hierarchy', buffer = ev.buf })
+
           vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {
             desc = 'List available code actions/fixes',
             buffer = ev.buf,
           })
-          vim.keymap.set('n', '<leader>ai', function()
+
+          vim.keymap.set('n', '<leader>cm', function()
             vim.lsp.buf.code_action({
               apply = true,
               filter = function(action)
