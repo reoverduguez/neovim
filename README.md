@@ -25,7 +25,7 @@ The configuration is broken down into modular files for easy maintenance:
 | `/lua/plugins/` | Individual plugin configurations loaded by lazy.nvim. |
 | `init.lua` | The entry point that bootstraps the configuration. |
 | `.luacheckrc` | Configuration rules for the Lua linter. |
-| `stylua.toml` | Formatting rules for the Lua formatter. |
+| `stylua.toml` | Formatting rules for the Lua formatter. Use `stylua .` |
 
 ## 🧩 Key Plugins Included
 
@@ -34,7 +34,7 @@ This setup comes pre-configured with several essential plugins to provide an IDE
 * **LSP & Autocompletion**: `nvim-lspconfig`, `mason`, `completion`
 * **UI/UX & Aesthetics**: `bufferline`, `lualine`, `autosession`
 * **File Management**: `neo-tree`
-* **Navigation & Searching**: `telescope (with 'fzf-native' and 'live-grep-args')`, `flash`
+* **Navigation & Searching**: `telescope (with fzf-native and live-grep-args)`, `flash`
 * **Syntax Highlighting**: `nvim-treesitter`
 * **Editing Enhancements**: `tabout`, `nvim-ts-autotag`, `mini`
 * **Formatting & Linting**: `conform`, `treesj`
