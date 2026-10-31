@@ -8,13 +8,27 @@ return {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
       },
+      'nvim-telescope/telescope-live-grep-args.nvim',
     },
     keys = {
-      { '<leader>ff', '<cmd>Telescope find_files<cr>', desc = 'Fuzzy find files' },
       {
+        '<leader>ff',
+        '<cmd>Telescope find_files<cr>',
+        desc = 'Find files',
+      },
+      {
+        --[[
+          common ripgrep flags:
+          - Filetype limit:    "pattern" -t js
+          - Exclude folder:    "pattern" --iglob !**/tests/**
+          - Whole word only:   "pattern" -w
+          - Case sensitive:    "pattern" -s
+          - Ignore gitignore:  "pattern" --no-ignore
+        ]]
+        --
         '<leader>fg',
         function()
-          require('telescope.builtin').live_grep({
+          require('telescope').extensions.live_grep_args.live_grep_args({
             layout_strategy = 'vertical',
             layout_config = {
               width = 0.9,
@@ -24,10 +38,18 @@ return {
             },
           })
         end,
-        desc = 'Search text inside files (required ripgrep in OS)',
+        desc = 'Search text inside files',
       },
-      { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'List open buffers/tabs' },
-      { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Search Neovim help documentation' },
+      {
+        '<leader>fb',
+        '<cmd>Telescope buffers<cr>',
+        desc = 'List open buffers/tabs',
+      },
+      {
+        '<leader>fh',
+        '<cmd>Telescope help_tags<cr>',
+        desc = 'Search Neovim help documentation',
+      },
       {
         '<leader>fk',
         '<cmd>Telescope keymaps<cr>',
@@ -37,7 +59,8 @@ return {
     config = function()
       local telescope = require('telescope')
       local action_state = require('telescope.actions.state')
-
+      local actions = require('telescope.actions')
+      local lga_actions = require('telescope-live-grep-args.actions')
       local scroll_results_right = function(prompt_bufnr)
         local picker = action_state.get_current_picker(prompt_bufnr)
         local results_win = picker.results_win
@@ -45,7 +68,6 @@ return {
           vim.cmd('normal! 15zl') -- shifts horizontal viewport 15 columns right
         end)
       end
-
       local scroll_results_left = function(prompt_bufnr)
         local picker = action_state.get_current_picker(prompt_bufnr)
         local results_win = picker.results_win
@@ -64,6 +86,10 @@ return {
             prompt_position = 'top', -- Set prompt at the top
           },
           sorting_strategy = 'ascending', -- Search results sort from top to bottom
+          preview = {
+            filesize_limit = 0.1, -- MB
+            timeout = 250,
+          },
           mappings = {
             i = {
               ['<Right>'] = scroll_results_right,
@@ -75,8 +101,42 @@ return {
             },
           },
         },
+        pickers = {
+          find_files = {
+            theme = 'dropdown',
+            previewer = false,
+            hidden = true,
+          },
+          buffers = {
+            theme = 'dropdown',
+            previewer = false,
+            sort_mru = true,
+            sort_lastused = true,
+            mappings = {
+              i = {
+                ['<C-d>'] = actions.delete_buffer,
+              },
+              n = {
+                ['dd'] = actions.delete_buffer,
+              },
+            },
+            extensions = {
+              live_grep_args = {
+                auto_quoting = true,
+                mappings = {
+                  i = {
+                    ['<C-i'] = lga_actions.quote_prompt({
+                      postfix = ' --iglob ',
+                    }),
+                  },
+                },
+              },
+            },
+          },
+        },
       })
       telescope.load_extension('fzf')
+      telescope.load_extension('live_grep_args')
     end,
   },
 }

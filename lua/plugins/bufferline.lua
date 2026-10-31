@@ -8,16 +8,17 @@ return {
     },
     keys = {
       { '<leader>bd', '<cmd>bdelete<cr>', desc = 'Delete active buffer' },
-      { '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', desc = 'Close all other buffers' },
-      { '<leader>br', '<Cmd>BufferLineCloseRight<CR>', desc = 'Close buffers to the right' },
-      { '<leader>bl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Close buffers to the left' },
-      { '<leader>bj', '<Cmd>BufferLinePick<CR>', desc = 'Jump to any buffer' },
+      { '<leader>bo', '<cmd>BufferLineCloseOthers<cr>', desc = 'Close all other buffers' },
+      { '<leader>br', '<cmd>BufferLineCloseRight<cr>', desc = 'Close buffers to the right' },
+      { '<leader>bl', '<cmd>BufferLineCloseLeft<cr>', desc = 'Close buffers to the left' },
+      { '<leader>bj', '<cmd>BufferLinePick<CR>', desc = 'Jump to any buffer' },
       { '<leader>bv', '<cmd>vsplit | BufferLinePick<cr>', desc = 'Vertical split and pick buffer' },
       { '<leader>bh', '<cmd>split | BufferLinePick<cr>', desc = 'Horizontal split and pick buffer' },
+      { '<leader>bp', '<cmd>BufferLineTogglePin<cr>', desc = 'Toggle pin on buffer' },
+      { '<leader>bP', '<cmd>BufferLineGroupClose ungrouped<cr>', desc = 'Delete unpinned buffers' },
 
       { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Go to next buffer' },
       { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Go to previous buffer' },
-
     },
     config = function()
       require('bufferline').setup({

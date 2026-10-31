@@ -136,24 +136,9 @@ return {
             end
           end, { desc = 'Show implementation', buffer = ev.buf })
 
-          vim.keymap.set(
-            'n',
-            'K',
-            vim.lsp.buf.hover,
-            { desc = 'Show hover documentation details', buffer = ev.buf }
-          )
-          vim.keymap.set(
-            'n',
-            '<leader>cr',
-            vim.lsp.buf.rename,
-            { desc = 'Rename variable or function across codebase', buffer = ev.buf }
-          )
-          vim.keymap.set(
-            'n',
-            '<leader>d',
-            vim.diagnostic.open_float,
-            { desc = 'Show line diagnostics', buffer = ev.buf }
-          )
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show hover documentation details', buffer = ev.buf })
+          vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename variable or function across codebase', buffer = ev.buf })
+          vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show line diagnostics', buffer = ev.buf })
 
           vim.keymap.set('n', '<leader>D', function()
             require('telescope.builtin').diagnostics({
