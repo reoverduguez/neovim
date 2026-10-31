@@ -20,6 +20,7 @@ return {
         --[[
           common ripgrep flags:
           - Filetype limit:    "pattern" -t js
+          - Include folder:    "pattern" --iglob **/tests/**
           - Exclude folder:    "pattern" --iglob !**/tests/**
           - Whole word only:   "pattern" -w
           - Case sensitive:    "pattern" -s
